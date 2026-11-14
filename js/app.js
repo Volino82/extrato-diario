@@ -4,6 +4,27 @@ const rotas = {
     '#/inicio': 'html-pages/inicio.html'
 };
 
+function ligarFormularioInicio() {
+    const formulario = main.querySelector('form');
+    if(!formulario) return;
+
+    formulario.addEventListener('submit',(evento) => {
+        evento.preventDefault();
+
+        const dados = new FormData(formulario);
+        const agenteLista = dados.get('agenteLista').trim();
+        const distrito = dados.get('distrito').trim();
+        const nucleo = dados.get('nucleo').trim();
+
+        if(!agenteLista || !distrito || !nucleo) {
+            console.log('Preencha todos os campos.');
+            return;
+        }
+
+        console.log({ agenteLista, distrito, nucleo});
+    });
+}
+
 async function mostrarTela() {
     const hash = window.location.hash || '#/inicio';
     const arquivo = rotas[hash] || rotas['#/inicio'];
@@ -17,6 +38,8 @@ async function mostrarTela() {
 
         const html = await resposta.text();
         main.innerHTML = html;
+        ligarFormularioInicio();
+
     } catch (erro) {
         console.error(erro);
         main.textContent = 'Não foi possível carregar esta tela.';
