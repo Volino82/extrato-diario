@@ -3,7 +3,7 @@ import { montar as montarInicio } from './views/inicio.js';
 const main = document.getElementById('main');
 
 const rotas = {
-    '#/inicio': { arquivo: 'html-pages/inicio.html', montar: montarInicio }
+    '#/inicio': { arquivo: 'html/inicio.html', montar: montarInicio }
 };
 
 async function mostrarTela() {
@@ -19,7 +19,7 @@ async function mostrarTela() {
 
         const html = await resposta.text();
         main.innerHTML = html;
-        rota.montar(main);;
+        rota.montar(main);
 
     } catch (erro) {
         console.error(erro);

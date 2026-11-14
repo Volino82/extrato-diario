@@ -1,3 +1,5 @@
+import { iniciarPesquisaDoDia } from "../core/estado.js";
+
 export function montar(container) {
     const formulario = container.querySelector('form');
     if(!formulario) return;
@@ -15,6 +17,13 @@ export function montar(container) {
             return;
         }
 
-        console.log({ agenteLista, distrito, nucleo});
+        const dia = iniciarPesquisaDoDia({ agenteLista, distrito, nucleo });
+
+        if (!dia) {
+            console.log('Não foi possível salvar os dados.');
+            return;
+        }
+        
+        console.log('Dia: ', dia);
     });
 }
