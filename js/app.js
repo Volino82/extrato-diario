@@ -1,44 +1,25 @@
+import { montar as montarInicio } from './views/inicio.js';
+
 const main = document.getElementById('main');
 
 const rotas = {
-    '#/inicio': 'html-pages/inicio.html'
+    '#/inicio': { arquivo: 'html-pages/inicio.html', montar: montarInicio }
 };
-
-function ligarFormularioInicio() {
-    const formulario = main.querySelector('form');
-    if(!formulario) return;
-
-    formulario.addEventListener('submit',(evento) => {
-        evento.preventDefault();
-
-        const dados = new FormData(formulario);
-        const agenteLista = dados.get('agenteLista').trim();
-        const distrito = dados.get('distrito').trim();
-        const nucleo = dados.get('nucleo').trim();
-
-        if(!agenteLista || !distrito || !nucleo) {
-            console.log('Preencha todos os campos.');
-            return;
-        }
-
-        console.log({ agenteLista, distrito, nucleo});
-    });
-}
 
 async function mostrarTela() {
     const hash = window.location.hash || '#/inicio';
-    const arquivo = rotas[hash] || rotas['#/inicio'];
+    const rota = rotas[hash] || rotas['#/inicio'];
 
     try {
-        const resposta = await fetch(arquivo);
+        const resposta = await fetch(rota.arquivo);
 
         if (!resposta.ok) {
-            throw new Error (`Erro ${resposta.status} ao buscar ${arquivo}`);
+            throw new Error (`Erro ${resposta.status} ao buscar ${rota.arquivo}`);
         }
 
         const html = await resposta.text();
         main.innerHTML = html;
-        ligarFormularioInicio();
+        rota.montar(main);;
 
     } catch (erro) {
         console.error(erro);
