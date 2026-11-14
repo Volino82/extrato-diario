@@ -29,3 +29,4 @@ async function mostrarTela() {
 
 window.addEventListener('hashchange', mostrarTela);
 mostrarTela();
+
