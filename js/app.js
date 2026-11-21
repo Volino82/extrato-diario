@@ -1,5 +1,6 @@
 import { montar as montarInicio } from './views/inicio.js';
 import {montar as montarRua } from './views/rua.js';
+import { limparDados } from './core/armazenamento.js';
 
 const main = document.getElementById('main');
 
@@ -34,6 +35,13 @@ async function mostrarTela() {
         main.textContent = 'Não foi possível carregar esta tela.';
     }
 }
+
+document.querySelector('[data-acao="limpar-memoria"]').addEventListener('click', () => {
+    if (!confirm('Apagar todos os dados salvos?')) return;
+    limparDados();
+    window.location.hash = '#/inicio';
+    window.location.reload();
+});
 
 window.addEventListener('hashchange', mostrarTela);
 mostrarTela();

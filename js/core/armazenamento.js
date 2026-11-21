@@ -31,3 +31,13 @@ export function salvarDados(dados) {
         return false;
     }
 }
+
+export function limparDados() {
+    try {
+        localStorage.removeItem(CHAVE);
+        return true;
+    } catch (erro) {
+        console.error('Erro ao limpar dados do armazenamento local:', erro);
+        return false;
+    }
+}
