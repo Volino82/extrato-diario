@@ -49,3 +49,8 @@ export function iniciarPesquisaDoDia({ agenteLista, distrito, nucleo }) {
     if (!salvarDados(dados)) return null;
     return dia;
 }
+
+export function buscarDia(id) {
+    const dados = lerDados();
+    return dados.dias.find((d) => d.id === id) || null;
+}
