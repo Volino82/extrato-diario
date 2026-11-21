@@ -3,12 +3,18 @@ import { montar as montarInicio } from './views/inicio.js';
 const main = document.getElementById('main');
 
 const rotas = {
-    '#/inicio': { arquivo: 'html/inicio.html', montar: montarInicio }
+    inicio: { arquivo: 'html/inicio.html', montar: montarInicio }
 };
 
-async function mostrarTela() {
+function lerRota() {
     const hash = window.location.hash || '#/inicio';
-    const rota = rotas[hash] || rotas['#/inicio'];
+    const [ nome, parametro] = hash.slice(2).split('/');
+    return { nome, parametro };
+}
+
+async function mostrarTela() {
+    const { nome, parametro } = lerRota();
+    const rota = rotas[nome] || rotas.inicio;
 
     try {
         const resposta = await fetch(rota.arquivo);
