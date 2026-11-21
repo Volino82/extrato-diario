@@ -1,9 +1,11 @@
 import { montar as montarInicio } from './views/inicio.js';
+import {montar as montarRua } from './views/rua.js';
 
 const main = document.getElementById('main');
 
 const rotas = {
-    inicio: { arquivo: 'html/inicio.html', montar: montarInicio }
+    inicio: { arquivo: 'html/inicio.html', montar: montarInicio },
+    rua: {arquivo: 'html/rua.html', montar: montarRua }
 };
 
 function lerRota() {
@@ -25,7 +27,7 @@ async function mostrarTela() {
 
         const html = await resposta.text();
         main.innerHTML = html;
-        rota.montar(main);
+        rota.montar(main, parametro);
 
     } catch (erro) {
         console.error(erro);
