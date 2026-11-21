@@ -25,5 +25,6 @@ export function montar(container) {
         }
         
         console.log('Dia: ', dia);
+        window.location.hash = `#/rua/${dia.id}`;
     });
 }

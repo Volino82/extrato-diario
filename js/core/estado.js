@@ -4,6 +4,10 @@ function gerarId() {
     return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 }
 
+function criarSlug(texto) {
+    return texto.replace(/[^a-z0-9]/g, '');
+}
+
 function dataHoje() {
     const agora = new Date();
     const ano = agora.getFullYear();
@@ -26,13 +30,16 @@ export function iniciarPesquisaDoDia({ agenteLista, distrito, nucleo }) {
     const agenteChave = normalizarAgente(agenteLista);
     const data = dataHoje();
 
+    const [aaaa, mm, dd] = data.split('-');
+    const id = `${dd}${mm}${aaaa}-${criarSlug(agenteChave)}`;
+
     let dia = dados.dias.find(
         (d) => d.agenteChave === agenteChave && d.data === data
     );
 
     if (!dia) {
         dia = {
-            id: gerarId(),
+            id,
             data,
             agenteLista,
             agenteChave,
